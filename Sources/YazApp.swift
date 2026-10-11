@@ -4,8 +4,13 @@ import UniformTypeIdentifiers
 final class AppState: ObservableObject {
     @Published var notes = [Note()]
     @Published var selectedID = UUID()
+    var lastSession = Data()
 
-    init() { selectedID = notes[0].id }
+    init() {
+        selectedID = notes[0].id
+        restoreSession()
+        startSessionAutosave()
+    }
 
     var selected: Note? { notes.first { $0.id == selectedID } }
 
@@ -19,6 +24,7 @@ final class AppState: ObservableObject {
         guard let i = notes.firstIndex(where: { $0.id == selectedID }) else { return }
         notes.remove(at: i)
         if !notes.isEmpty { selectedID = notes[min(i, notes.count - 1)].id }
+        persistSession()
     }
 
     func save() {
@@ -76,6 +82,7 @@ final class AppState: ObservableObject {
 @main
 struct YazApp: App {
     @StateObject var state = AppState()
+    @AppStorage("typingSounds") var typingSounds = true
 
     var body: some Scene {
         Window("yaz", id: "main") {
@@ -98,6 +105,9 @@ struct YazApp: App {
                 Button("Bigger") { state.zoom(0.1) }.keyboardShortcut("+", modifiers: .command)
                 Button("Smaller") { state.zoom(-0.1) }.keyboardShortcut("-")
                 Button("Actual Size") { state.zoom(1 - Theme.scale) }.keyboardShortcut("0")
+                Divider()
+                Toggle("Typing Sounds", isOn: $typingSounds)
+                    .keyboardShortcut("k", modifiers: [.command, .shift])
             }
             CommandMenu("Tabs") {
                 Button("Next Tab") { state.select(offset: 1) }.keyboardShortcut("]", modifiers: [.command, .shift])

@@ -11,6 +11,8 @@ targets:
       - path: Sources
       - path: Resources/Fonts
         type: folder
+      - path: Resources/Sounds
+        type: folder
       - path: Resources/Assets.xcassets
     settings:
       base:

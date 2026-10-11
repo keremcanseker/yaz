@@ -76,6 +76,10 @@ struct Editor: NSViewRepresentable {
 
 final class NoteTextView: NSTextView {
     override func paste(_ sender: Any?) { pasteAsPlainText(sender) }
+    override func keyDown(with event: NSEvent) {
+        if !event.modifierFlags.contains(.command) { KeySound.play() }
+        super.keyDown(with: event)
+    }
 
     override func setFrameSize(_ newSize: NSSize) {
         let inset = max(32, (newSize.width - 680) / 2)
