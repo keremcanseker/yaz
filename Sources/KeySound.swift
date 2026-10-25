@@ -1,7 +1,7 @@
 import AVFoundation
 
 // One sample for every key, played on keyDown with slight random rate/volume so it never sounds looped.
-// ponytail: pool of 4 players; overlapping fast typing beyond that just reuses the oldest.
+// pool of 4 players; overlapping fast typing beyond that just reuses the oldest.
 enum KeySound {
     // Written by the @AppStorage toggle in the View menu.
     static var enabled: Bool { UserDefaults.standard.object(forKey: "typingSounds") as? Bool ?? true }

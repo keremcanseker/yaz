@@ -207,7 +207,7 @@ final class NoteLayoutManager: NSLayoutManager {
 
     static let covered = Theme.bodyFont.coveredCharacterSet as NSCharacterSet
 
-    // ponytail: 18 is the calibration knob — the advance a box needs, per marker, whatever font falls back.
+    // 18 is the calibration knob — the advance a box needs, per marker, whatever font falls back.
     static func kerns(_ font: NSFont, _ scale: CGFloat) -> [unichar: CGFloat] {
         ([0x2610, 0x2611] as [unichar]).reduce(into: [:]) {
             let w = (String(UnicodeScalar($1)!) as NSString).size(withAttributes: [.font: font]).width
@@ -215,7 +215,7 @@ final class NoteLayoutManager: NSLayoutManager {
         }
     }
 
-    // ponytail: rescans the whole document on each keystroke; fine for note-sized documents.
+    // rescans the whole document on each keystroke; fine for note-sized documents.
     static func restyle(_ storage: NSTextStorage) {
         let ns = storage.string as NSString
         let full = NSRange(location: 0, length: ns.length)

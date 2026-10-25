@@ -1,7 +1,7 @@
 import AppKit
 
 // Snapshot of every open tab, written every 2s and on quit, restored on launch.
-// ponytail: whole-session rewrite each tick; fine for a handful of notes.
+// whole-session rewrite each tick; fine for a handful of notes.
 extension AppState {
     private struct Saved: Codable { var text: String; var path: String?; var selected: Bool; var dirty: Bool? }
 
